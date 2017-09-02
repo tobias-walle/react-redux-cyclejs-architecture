@@ -1,0 +1,8 @@
+{
+  "name": "react-redux-cyclejs-architecture",
+  "version": "1.0.0",
+  "description": "An example architecture of react + redux + cyclejs",
+  "main": "index.js",
+  "author": "Tobias Walle",
+  "license": "MIT"
+}
