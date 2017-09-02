@@ -3,7 +3,7 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 
 module.exports = {
   entry: {
-    app: ['./src/index.ts']
+    app: ['./src/index.tsx']
   },
   output: {
     path: path.resolve(__dirname, 'dist'),
