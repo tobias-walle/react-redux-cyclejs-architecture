@@ -24,6 +24,13 @@
     "webpack": "^3.5.5",
     "webpack-dev-server": "^2.7.1"
   },
+  "dependencies": {
+    "react": "^15.6.1",
+    "react-dom": "^15.6.1",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2",
+    "redux-typed-ducks": "^0.3.0"
+  },
   "jest": {
     "transform": {
       ".(ts|tsx)": "<rootDir>/node_modules/ts-jest/preprocessor.js"
@@ -36,9 +43,5 @@
       "jsx",
       "json"
     ]
-  },
-  "dependencies": {
-    "react": "^15.6.1",
-    "react-dom": "^15.6.1"
   }
 }
