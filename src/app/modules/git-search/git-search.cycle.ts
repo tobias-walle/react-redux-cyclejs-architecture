@@ -1,8 +1,8 @@
 import { Main } from 'redux-cycles';
 import xs from 'xstream';
 import debounce from 'xstream/extra/debounce';
-import { ActionSink, Sinks } from '../../cyclejs/sinks';
-import { Sources } from '../../cyclejs/sources';
+import { ActionSink, Sinks } from '../../models/sinks';
+import { Sources } from '../../models/sources';
 import { ActionStream } from '../../models/action-stream';
 import { httpRequestDuck, httpResponseDuck, HttpResponsePayload } from '../http/http.duck';
 import { setSearchDuck, SetSearchPayload, setSearchResultsDuck } from './git-search.duck';

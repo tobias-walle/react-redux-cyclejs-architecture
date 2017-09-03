@@ -1,7 +1,7 @@
 import { Action } from 'redux-typed-ducks';
 import { Stream } from 'xstream';
-import { HTTPSink, Sinks } from '../../cyclejs/sinks';
-import { Sources } from '../../cyclejs/sources';
+import { HTTPSink, Sinks } from '../../models/sinks';
+import { Sources } from '../../models/sources';
 import { ActionStream } from '../../models/action-stream';
 import { httpRequestDuck, HttpRequestPayload, httpResponseDuck, HttpResponsePayload } from './http.duck';
 
