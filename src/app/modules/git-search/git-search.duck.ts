@@ -1,17 +1,20 @@
 import { createDuck, createReducer } from 'redux-typed-ducks';
+import { GitUser } from './models/git-user';
 
-export interface IGitSearchState {
+export interface GitSearchState {
   search: string;
+  searchResults: GitUser[];
 }
 
-const initialState: IGitSearchState = {
+const initialState: GitSearchState = {
   search: '',
+  searchResults: [],
 };
 
-export interface ISetSearchPayload {
+export interface SetSearchPayload {
   search: string;
 }
-export const setSearchDuck = createDuck<IGitSearchState, ISetSearchPayload>(
+export const setSearchDuck = createDuck<GitSearchState, SetSearchPayload>(
   'app/git-search/SET_SEARCH',
   (state, payload) => {
     return {
@@ -21,4 +24,20 @@ export const setSearchDuck = createDuck<IGitSearchState, ISetSearchPayload>(
   },
 );
 
-export const gitSearchReducer = createReducer([setSearchDuck], initialState);
+export interface SetSearchResultsPayload {
+  searchResults: GitUser[];
+}
+export const setSearchResultsDuck = createDuck<GitSearchState, SetSearchResultsPayload>(
+  'app/git-search/SET_SEARCH_RESULTS',
+  (state, payload) => {
+    return {
+      ...state,
+      searchResults: payload.searchResults,
+    };
+  },
+);
+
+export const gitSearchReducer = createReducer([
+  setSearchDuck,
+  setSearchResultsDuck,
+], initialState);

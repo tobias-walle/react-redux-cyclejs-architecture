@@ -2,3 +2,4 @@
 node_modules/
 dist
 tsc
+yarn-error.log
