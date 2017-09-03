@@ -18,7 +18,7 @@ export const gitSearchCycle: Main<GitSearchSources, GitSearchSinks> = (sources) 
     .debug('action');
 
   const httpRequestAction$ = setSearchAction$
-    .compose(debounce(1000))
+    .compose(debounce(100))
     .map((action) => httpRequestDuck({
       category: GIT_SEARCH_CATEGORY,
       options: {
@@ -34,8 +34,8 @@ export const gitSearchCycle: Main<GitSearchSources, GitSearchSinks> = (sources) 
 
   const setSearchResultsAction$: ActionSink = httpResponseAction$
     .filter((action) => action.payload!.category === GIT_SEARCH_CATEGORY)
-    .map((action) => action.payload!.response.body)
-    .map((response) => setSearchResultsDuck({searchResults: response.items}));
+    .map((action) => action.payload!.response.body || {})
+    .map((response) => setSearchResultsDuck({searchResults: response.items || []}));
 
   return {
     ACTION: xs.merge(httpRequestAction$, setSearchResultsAction$),

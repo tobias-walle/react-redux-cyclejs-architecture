@@ -1,8 +1,8 @@
 import { Action } from 'redux-typed-ducks';
-import { Stream } from 'xstream';
+import xs, { Stream } from 'xstream';
+import { ActionStream } from '../../models/action-stream';
 import { HTTPSink, Sinks } from '../../models/sinks';
 import { Sources } from '../../models/sources';
-import { ActionStream } from '../../models/action-stream';
 import { httpRequestDuck, HttpRequestPayload, httpResponseDuck, HttpResponsePayload } from './http.duck';
 
 export function httpCycle(sources: Sources): Partial<Sinks> {
@@ -17,6 +17,9 @@ export function httpCycle(sources: Sources): Partial<Sinks> {
 
   const httpResponseAction$: Stream<Action<HttpResponsePayload>> = sources.HTTP
     .select()
+    .map((httpResponseStream$) => {
+      return httpResponseStream$.replaceError((err) => xs.of(err.response));
+    })
     .flatten()
     .filter((response) => response.request.category != null)
     .map((response) => httpResponseDuck({
