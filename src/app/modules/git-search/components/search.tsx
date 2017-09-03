@@ -1,4 +1,12 @@
 import * as React from 'react';
+import { Input } from '../../form/components/input';
+
+// language=PostCSS
+const SearchInput = Input.extend`
+  & {
+    margin-bottom: 1.6rem;
+  }
+`;
 
 export interface ISearchProps {
   onSearch: (search: string) => void;
@@ -6,5 +14,10 @@ export interface ISearchProps {
 }
 
 export const Search = ({search = '', onSearch}: ISearchProps) => (
-  <input type='text' value={search} onChange={(event) => onSearch && onSearch(event.target.value)}/>
+  <SearchInput
+    type='text'
+    value={search}
+    onChange={(event) => onSearch && onSearch((event.target as any).value)}
+    placeholder='Search Users'
+  />
 );
