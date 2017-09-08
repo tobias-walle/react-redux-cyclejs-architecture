@@ -13,14 +13,23 @@ const StyledUl = styled.ul`
 
 export interface GitUsersProps {
   users: GitUser[];
+  loading: boolean;
+  error?: string;
 }
 
 export class GitUsers extends PureComponent<GitUsersProps, {}> {
   public render() {
-    return (
-      <StyledUl>
-        {this.props.users.map((user) => <GitUserItem key={user.id} user={user}/>)}
-      </StyledUl>
-    );
+    const {loading, error, users} = this.props;
+    if (loading) {
+      return <p>Loading...</p>;
+    } else if (error) {
+      return <p>{error}</p>;
+    } else {
+      return (
+        <StyledUl>
+          {users.map((user) => <GitUserItem key={user.id} user={user}/>)}
+        </StyledUl>
+      );
+    }
   }
 }

@@ -4,11 +4,14 @@ import { GitUser } from './models/git-user';
 export interface GitSearchState {
   search: string;
   searchResults: GitUser[];
+  loading: boolean;
+  error?: string;
 }
 
 const initialState: GitSearchState = {
   search: '',
   searchResults: [],
+  loading: false,
 };
 
 export interface SetSearchPayload {
@@ -20,6 +23,8 @@ export const setSearchDuck = createDuck<GitSearchState, SetSearchPayload>(
     return {
       ...state,
       search: payload.search,
+      error: undefined,
+      loading: true,
     };
   },
 );
@@ -33,6 +38,23 @@ export const setSearchResultsDuck = createDuck<GitSearchState, SetSearchResultsP
     return {
       ...state,
       searchResults: payload.searchResults,
+      error: undefined,
+      loading: false,
+    };
+  },
+);
+
+export interface SetSearchErrorPayload {
+  error: string;
+}
+export const setSearchErrorDuck = createDuck<GitSearchState, SetSearchErrorPayload>(
+  'app/git-search/SET_SEARCH_ERROR',
+  (state, {error}) => {
+    return {
+      ...state,
+      searchResults: [],
+      loading: false,
+      error,
     };
   },
 );
@@ -40,4 +62,5 @@ export const setSearchResultsDuck = createDuck<GitSearchState, SetSearchResultsP
 export const gitSearchReducer = createReducer([
   setSearchDuck,
   setSearchResultsDuck,
+  setSearchErrorDuck,
 ], initialState);

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 import { SHADOW_LEVELS } from '../../core/constants/shadows';
 
+// language=PostCSS
 export const Input = styled.input`
   & {
     padding: .5rem;

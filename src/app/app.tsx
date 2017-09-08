@@ -11,7 +11,7 @@ injectGlobal`
 
   body {
     overflow-y: scroll;
-    background: #e2e1e0;
+    background: #F5F5F5;
   }
 
   body, input {
@@ -19,6 +19,7 @@ injectGlobal`
   }
 `;
 
+// language=PostCSS
 const AppContent = styled.div`
   & {
     max-width: 600px;

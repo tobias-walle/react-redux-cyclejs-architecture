@@ -5,7 +5,7 @@ import { ActionStream } from '../../models/action-stream';
 import { ActionSink, Sinks } from '../../models/sinks';
 import { Sources } from '../../models/sources';
 import { httpRequestDuck, httpResponseDuck, HttpResponsePayload } from '../http/http.duck';
-import { setSearchDuck, SetSearchPayload, setSearchResultsDuck } from './git-search.duck';
+import { setSearchDuck, setSearchErrorDuck, SetSearchPayload, setSearchResultsDuck } from './git-search.duck';
 
 const GIT_SEARCH_CATEGORY = 'app/git-search/SEARCH';
 
@@ -18,7 +18,7 @@ export const gitSearchCycle: Main<GitSearchSources, GitSearchSinks> = (sources) 
     .debug('action');
 
   const httpRequestAction$ = setSearchAction$
-    .compose(debounce(100))
+    .compose(debounce(1000))
     .map((action) => httpRequestDuck({
       category: GIT_SEARCH_CATEGORY,
       options: {
@@ -34,8 +34,14 @@ export const gitSearchCycle: Main<GitSearchSources, GitSearchSinks> = (sources) 
 
   const setSearchResultsAction$: ActionSink = httpResponseAction$
     .filter((action) => action.payload!.category === GIT_SEARCH_CATEGORY)
-    .map((action) => action.payload!.response.body || {})
-    .map((response) => setSearchResultsDuck({searchResults: response.items || []}));
+    .map((action) => {
+      const {error, body = {}} = action.payload!.response;
+      if (error) {
+        return setSearchErrorDuck({error: body.message});
+      } else {
+        return setSearchResultsDuck({searchResults: body.items || []});
+      }
+    });
 
   return {
     ACTION: xs.merge(httpRequestAction$, setSearchResultsAction$),
